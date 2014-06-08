@@ -26,7 +26,7 @@ var LevelColors = map[Level]Color{
 	WARNING:  YELLOW,
 	NOTICE:   GREEN,
 	INFO:     WHITE,
-	DEBUG:    CYAN,
+	DEBUG:    BLUE,
 }
 
 // Handler handles the output.
