@@ -118,6 +118,12 @@ func (f defaultFormatter) Format(rec *Record) string {
 //               //
 ///////////////////
 
+// SetLevel changes the level of DefaultLogger and DefaultHandler.
+func SetLevel(l Level) {
+	DefaultLogger.SetLevel(l)
+	DefaultHandler.SetLevel(l)
+}
+
 // Fatal is equivalent to Critical() followed by a call to os.Exit(1).
 func Fatal(args ...interface{}) { DefaultLogger.Fatal(args...) }
 
