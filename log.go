@@ -1,9 +1,7 @@
 // Package logging is an alternative to log package in standard library.
 package log
 
-import (
-	"os"
-)
+import "os"
 
 type Level int
 
