@@ -7,22 +7,7 @@ import (
 	"time"
 )
 
-type (
-	Color int
-	Level int
-)
-
-// Colors for different log levels.
-const (
-	BLACK Color = (iota + 30)
-	RED
-	GREEN
-	YELLOW
-	BLUE
-	MAGENTA
-	CYAN
-	WHITE
-)
+type Level int
 
 // Logging levels.
 const (
@@ -41,15 +26,6 @@ var LevelNames = map[Level]string{
 	NOTICE:   "NOTICE",
 	INFO:     "INFO",
 	DEBUG:    "DEBUG",
-}
-
-var LevelColors = map[Level]Color{
-	CRITICAL: MAGENTA,
-	ERROR:    RED,
-	WARNING:  YELLOW,
-	NOTICE:   GREEN,
-	INFO:     WHITE,
-	DEBUG:    CYAN,
 }
 
 var (

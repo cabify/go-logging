@@ -6,6 +6,29 @@ import (
 	"sync"
 )
 
+type Color int
+
+// Colors for different log levels.
+const (
+	BLACK Color = (iota + 30)
+	RED
+	GREEN
+	YELLOW
+	BLUE
+	MAGENTA
+	CYAN
+	WHITE
+)
+
+var LevelColors = map[Level]Color{
+	CRITICAL: MAGENTA,
+	ERROR:    RED,
+	WARNING:  YELLOW,
+	NOTICE:   GREEN,
+	INFO:     WHITE,
+	DEBUG:    CYAN,
+}
+
 // Handler handles the output.
 type Handler interface {
 	SetFormatter(Formatter)
