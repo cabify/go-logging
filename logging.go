@@ -110,18 +110,6 @@ type Logger interface {
 	Debugf(format string, args ...interface{})
 }
 
-// Handler handles the output.
-type Handler interface {
-	SetFormatter(Formatter)
-	SetLevel(Level)
-
-	// Handle single log record.
-	Handle(*Record)
-
-	// Close the handler.
-	Close()
-}
-
 // Record contains all of the information about a single log message.
 type Record struct {
 	format      *string       // Format string

@@ -2,9 +2,7 @@
 
 package log
 
-import (
-	"log/syslog"
-)
+import "log/syslog"
 
 ///////////////////
 //               //
