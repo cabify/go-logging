@@ -121,8 +121,9 @@ type Handler interface {
 
 // Record contains all of the information about a single log message.
 type Record struct {
-	Format      string        // Format string
-	Args        []interface{} // Arguments to format string
+	format      string        // Format string
+	args        []interface{} // Arguments to format string
+	Message     string        // Formatted log message
 	LoggerName  string        // Name of the logger module
 	Level       Level         // Level of the record
 	Time        time.Time     // Time of the record (local time)
@@ -148,7 +149,7 @@ type defaultFormatter struct{}
 
 // Format outputs a message like "2014-02-28 18:15:57 [example] INFO     something happened"
 func (f *defaultFormatter) Format(rec *Record) string {
-	return fmt.Sprintf("%s [%s] %-8s %s", fmt.Sprint(rec.Time)[:19], rec.LoggerName, LevelNames[rec.Level], fmt.Sprintf(rec.Format, rec.Args...))
+	return fmt.Sprintf("%s [%s] %-8s %s", fmt.Sprint(rec.Time)[:19], rec.LoggerName, LevelNames[rec.Level], rec.Message)
 }
 
 ///////////////////////////
@@ -233,8 +234,8 @@ func (l *logger) log(level Level, format string, args ...interface{}) {
 	}
 
 	rec := &Record{
-		Format:      format,
-		Args:        args,
+		format:      format,
+		args:        args,
 		LoggerName:  l.Name,
 		Level:       level,
 		Time:        time.Now(),
@@ -242,6 +243,12 @@ func (l *logger) log(level Level, format string, args ...interface{}) {
 		Line:        line,
 		ProcessName: procName(),
 		ProcessID:   os.Getpid(),
+	}
+
+	if format != "" {
+		rec.Message = fmt.Sprintf(format, args...)
+	} else {
+		rec.Message = fmt.Sprint(args...)
 	}
 
 	l.Handler.Handle(rec)

@@ -43,7 +43,7 @@ type MyHandler struct {
 }
 
 func (h *MyHandler) Handle(rec *logging.Record) {
-	fmt.Printf(rec.Format, rec.Args...)
+	fmt.Print(rec.Message)
 }
 
 func (h *MyHandler) Close() {
