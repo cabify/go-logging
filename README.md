@@ -3,14 +3,14 @@ logging
 
 Simple logging package in Go.
 
-[![GoDoc](https://godoc.org/github.com/koding/logging?status.png)](https://godoc.org/github.com/koding/logging)
+[![GoDoc](https://godoc.org/github.com/cenkalti/log?status.png)](https://godoc.org/github.com/cenkalti/log)
 
 
 Install
 -------
 
 ```sh
-$ go get github.com/koding/logging
+$ go get github.com/cenkalti/log
 ```
 
 
@@ -28,4 +28,4 @@ Features
 Example Usage
 -------------
 
-See [https://github.com/koding/logging/blob/master/example/example.go](https://github.com/koding/logging/blob/master/example/example.go)
+See [https://github.com/cenkalti/log/blob/master/example/example.go](https://github.com/cenkalti/log/blob/master/example/example.go)

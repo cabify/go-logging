@@ -3,7 +3,7 @@ package main
 import (
 	"fmt"
 
-	"github.com/koding/logging"
+	"github.com/cenkalti/log"
 )
 
 func main() {
