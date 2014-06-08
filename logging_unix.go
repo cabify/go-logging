@@ -2,7 +2,4 @@
 
 package log
 
-func init() {
-	StdoutHandler.Colorize = true
-	StderrHandler.Colorize = true
-}
+func init() { strerrHandler.Colorize = true }

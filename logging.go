@@ -31,11 +31,11 @@ var LevelNames = map[Level]string{
 var (
 	DefaultLogger    Logger    = NewLogger(procName())
 	DefaultLevel     Level     = INFO
-	DefaultHandler   Handler   = StderrHandler
-	DefaultFormatter Formatter = &defaultFormatter{}
-	StdoutHandler              = NewWriterHandler(os.Stdout)
-	StderrHandler              = NewWriterHandler(os.Stderr)
+	DefaultHandler   Handler   = strerrHandler
+	DefaultFormatter Formatter = defaultFormatter{}
 )
+
+var strerrHandler = NewWriterHandler(os.Stderr)
 
 // Logger is the interface for outputing log messages in different levels.
 // A new Logger can be created with NewLogger() function.
@@ -56,31 +56,24 @@ type Logger interface {
 	// Fatal is equivalent to l.Critical followed by a call to os.Exit(1).
 	Fatal(args ...interface{})
 	Fatalf(format string, args ...interface{})
-
 	// Panic is equivalent to l.Critical followed by a call to panic().
 	Panic(args ...interface{})
 	Panicf(format string, args ...interface{})
-
 	// Critical logs a message using CRITICAL as log level.
 	Critical(args ...interface{})
 	Criticalf(format string, args ...interface{})
-
 	// Error logs a message using ERROR as log level.
 	Error(args ...interface{})
 	Errorf(format string, args ...interface{})
-
 	// Warning logs a message using WARNING as log level.
 	Warning(args ...interface{})
 	Warningf(format string, args ...interface{})
-
 	// Notice logs a message using NOTICE as log level.
 	Notice(args ...interface{})
 	Noticef(format string, args ...interface{})
-
 	// Info logs a message using INFO as log level.
 	Info(args ...interface{})
 	Infof(format string, args ...interface{})
-
 	// Debug logs a message using DEBUG as log level.
 	Debug(args ...interface{})
 	Debugf(format string, args ...interface{})
@@ -108,14 +101,14 @@ type Formatter interface {
 
 ///////////////////////
 //                   //
-// Default Formatter //
+// DefaultFormatter //
 //                   //
 ///////////////////////
 
 type defaultFormatter struct{}
 
 // Format outputs a message like "2014-02-28 18:15:57 [example] INFO     something happened"
-func (f *defaultFormatter) Format(rec *Record) string {
+func (f defaultFormatter) Format(rec *Record) string {
 	return fmt.Sprintf("%s [%s] %-8s %s", fmt.Sprint(rec.Time)[:19], rec.LoggerName, LevelNames[rec.Level], rec.Message)
 }
 
