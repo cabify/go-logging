@@ -9,6 +9,48 @@ import (
 	"time"
 )
 
+// Logger is the interface for outputing log messages in different levels.
+// A new Logger can be created with NewLogger() function.
+// You can changed the output handler with SetHandler() function.
+type Logger interface {
+	// SetLevel changes the level of the logger. Default is logging.Info.
+	SetLevel(Level)
+
+	// SetHandler replaces the current handler for output. Default is logging.StderrHandler.
+	SetHandler(Handler)
+
+	// SetCallDepth sets the parameter passed to runtime.Caller().
+	// It is used to get the file name from call stack.
+	// For example you need to set it to 1 if you are using a wrapper around
+	// the Logger. Default value is zero.
+	SetCallDepth(int)
+
+	// Fatal is equivalent to l.Critical followed by a call to os.Exit(1).
+	Fatal(args ...interface{})
+	Fatalf(format string, args ...interface{})
+	// Panic is equivalent to l.Critical followed by a call to panic().
+	Panic(args ...interface{})
+	Panicf(format string, args ...interface{})
+	// Critical logs a message using CRITICAL as log level.
+	Critical(args ...interface{})
+	Criticalf(format string, args ...interface{})
+	// Error logs a message using ERROR as log level.
+	Error(args ...interface{})
+	Errorf(format string, args ...interface{})
+	// Warning logs a message using WARNING as log level.
+	Warning(args ...interface{})
+	Warningf(format string, args ...interface{})
+	// Notice logs a message using NOTICE as log level.
+	Notice(args ...interface{})
+	Noticef(format string, args ...interface{})
+	// Info logs a message using INFO as log level.
+	Info(args ...interface{})
+	Infof(format string, args ...interface{})
+	// Debug logs a message using DEBUG as log level.
+	Debug(args ...interface{})
+	Debugf(format string, args ...interface{})
+}
+
 ///////////////////////////
 //                       //
 // Logger implementation //
