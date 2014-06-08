@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"io"
 	"sync"
+	"time"
 )
 
 type Color int
@@ -39,6 +40,26 @@ type Handler interface {
 
 	// Close the handler.
 	Close()
+}
+
+// Formatter formats a record.
+type Formatter interface {
+	// Format the record and return a message.
+	Format(*Record) (message string)
+}
+
+// Record contains all of the information about a single log message.
+type Record struct {
+	format      *string       // Format string
+	args        []interface{} // Arguments to format string
+	Message     string        // Formatted log message
+	LoggerName  string        // Name of the logger module
+	Level       Level         // Level of the record
+	Time        time.Time     // Time of the record (local time)
+	Filename    string        // File name of the log call (absolute path)
+	Line        int           // Line number in file
+	ProcessID   int           // PID
+	ProcessName string        // Name of the process
 }
 
 /////////////////
@@ -159,4 +180,26 @@ func (b *MultiHandler) Close() {
 		}(handler)
 	}
 	wg.Wait()
+}
+
+///////////////////////
+//                   //
+// DefaultFormatter //
+//                   //
+///////////////////////
+
+type defaultFormatter struct{}
+
+// Format outputs a message like "2014-02-28 18:15:57 [example] INFO     something happened"
+func (f defaultFormatter) Format(rec *Record) string {
+	return fmt.Sprintf("%s [%s] %-8s %s", fmt.Sprint(rec.Time)[:19], rec.LoggerName, LevelNames[rec.Level], rec.Message)
+}
+
+var LevelNames = map[Level]string{
+	CRITICAL: "CRITICAL",
+	ERROR:    "ERROR",
+	WARNING:  "WARNING",
+	NOTICE:   "NOTICE",
+	INFO:     "INFO",
+	DEBUG:    "DEBUG",
 }
