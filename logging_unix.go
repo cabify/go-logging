@@ -1,6 +1,6 @@
 // +build darwin freebsd linux netbsd openbsd
 
-package logging
+package log
 
 func init() {
 	StdoutHandler.Colorize = true

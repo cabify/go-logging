@@ -9,15 +9,15 @@ import (
 func main() {
 
 	// Default logger
-	logging.Debug("Debug")
-	logging.Info("Info")
-	logging.Notice("Notice")
-	logging.Warning("Warning")
-	logging.Error("Error")
-	logging.Critical("Critical")
+	log.Debug("Debug")
+	log.Info("Info")
+	log.Notice("Notice")
+	log.Warning("Warning")
+	log.Error("Error")
+	log.Critical("Critical")
 
 	// Custom logger with default handler
-	l := logging.NewLogger("test")
+	l := log.NewLogger("test")
 
 	l.Debug("Debug")
 	l.Info("Info")
@@ -27,7 +27,7 @@ func main() {
 	l.Critical("Critical")
 
 	// Custom logger with custom handler
-	l2 := logging.NewLogger("test2")
+	l2 := log.NewLogger("test2")
 	l2.SetHandler(&MyHandler{})
 
 	l2.Debug("Debug")
@@ -39,10 +39,10 @@ func main() {
 }
 
 type MyHandler struct {
-	logging.BaseHandler
+	log.BaseHandler
 }
 
-func (h *MyHandler) Handle(rec *logging.Record) {
+func (h *MyHandler) Handle(rec *log.Record) {
 	fmt.Print(rec.Message)
 }
 
