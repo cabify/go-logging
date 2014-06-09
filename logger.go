@@ -77,17 +77,9 @@ func NewLogger(name string) Logger {
 	}
 }
 
-func (l *logger) SetLevel(level Level) {
-	l.Level = level
-}
-
-func (l *logger) SetHandler(b Handler) {
-	l.Handler = b
-}
-
-func (l *logger) SetCallDepth(n int) {
-	l.calldepth = n
-}
+func (l *logger) SetLevel(level Level) { l.Level = level }
+func (l *logger) SetHandler(b Handler) { l.Handler = b }
+func (l *logger) SetCallDepth(n int)   { l.calldepth = n }
 
 func (l *logger) log(level Level, message string) {
 	if level > l.Level {
