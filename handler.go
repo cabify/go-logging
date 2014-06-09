@@ -3,6 +3,7 @@ package log
 import (
 	"fmt"
 	"io"
+	"strings"
 	"sync"
 	"time"
 )
@@ -120,13 +121,13 @@ func (b *WriterHandler) Handle(rec *Record) {
 	if message == "" {
 		return
 	}
+	if !strings.HasSuffix(message, "\n") {
+		message += "\n"
+	}
 	if b.Colorize {
-		b.w.Write([]byte(fmt.Sprintf("\033[%dm", LevelColors[rec.Level])))
+		message = fmt.Sprintf("\033[%dm%s\033[0m", LevelColors[rec.Level], message)
 	}
 	fmt.Fprint(b.w, message)
-	if b.Colorize {
-		b.w.Write([]byte("\033[0m")) // reset color
-	}
 }
 
 func (b *WriterHandler) Close() {}

@@ -5,7 +5,6 @@ import (
 	"os"
 	"path/filepath"
 	"runtime"
-	"strings"
 	"time"
 )
 
@@ -25,30 +24,34 @@ type Logger interface {
 	// the Logger. Default value is zero.
 	SetCallDepth(int)
 
-	// Fatal is equivalent to l.Critical followed by a call to os.Exit(1).
+	// Fatal is equivalent to Logger.Critical followed by a call to os.Exit(1).
 	Fatal(args ...interface{})
 	Fatalf(format string, args ...interface{})
-	// Panic is equivalent to l.Critical followed by a call to panic().
+	Fatalln(args ...interface{})
+	// Panic is equivalent to Logger.Critical followed by a call to panic().
 	Panic(args ...interface{})
 	Panicf(format string, args ...interface{})
-	// Critical logs a message using CRITICAL as log level.
+	Panicln(args ...interface{})
+
+	// Log functions
 	Critical(args ...interface{})
 	Criticalf(format string, args ...interface{})
-	// Error logs a message using ERROR as log level.
+	Criticalln(args ...interface{})
 	Error(args ...interface{})
 	Errorf(format string, args ...interface{})
-	// Warning logs a message using WARNING as log level.
+	Errorln(args ...interface{})
 	Warning(args ...interface{})
 	Warningf(format string, args ...interface{})
-	// Notice logs a message using NOTICE as log level.
+	Warningln(args ...interface{})
 	Notice(args ...interface{})
 	Noticef(format string, args ...interface{})
-	// Info logs a message using INFO as log level.
+	Noticeln(args ...interface{})
 	Info(args ...interface{})
 	Infof(format string, args ...interface{})
-	// Debug logs a message using DEBUG as log level.
+	Infoln(args ...interface{})
 	Debug(args ...interface{})
 	Debugf(format string, args ...interface{})
+	Debugln(args ...interface{})
 }
 
 ///////////////////////////
@@ -86,7 +89,7 @@ func (l *logger) SetCallDepth(n int) {
 	l.calldepth = n
 }
 
-func (l *logger) log(level Level, format *string, args ...interface{}) {
+func (l *logger) log(level Level, message string) {
 	if level > l.Level {
 		return
 	}
@@ -98,90 +101,122 @@ func (l *logger) log(level Level, format *string, args ...interface{}) {
 	}
 
 	rec := &Record{
-		format:      format,
-		args:        args,
+		Message:     message,
 		LoggerName:  l.Name,
 		Level:       level,
 		Time:        time.Now(),
 		Filename:    file,
 		Line:        line,
-		ProcessName: procName(),
-		ProcessID:   os.Getpid(),
-	}
-
-	if format != nil {
-		rec.Message = fmt.Sprintf(*format, args...)
-	} else {
-		rec.Message = fmt.Sprint(args...)
-	}
-
-	// Add missing newline at the end.
-	if !strings.HasSuffix(rec.Message, "\n") {
-		rec.Message += "\n"
+		ProcessName: procName,
+		ProcessID:   pid,
 	}
 
 	l.Handler.Handle(rec)
 }
 
 // procName returns the name of the current process.
-func procName() string { return filepath.Base(os.Args[0]) }
+// func procName() string { return filepath.Base(os.Args[0]) }
+var procName = filepath.Base(os.Args[0])
+var pid = os.Getpid()
 
-// Fatal is equivalent to Critical() followed by a call to os.Exit(1).
 func (l *logger) Fatal(args ...interface{}) {
 	l.Critical(args...)
 	os.Exit(1)
 }
 
-// Fatalf is equivalent to Criticalf() followed by a call to os.Exit(1).
 func (l *logger) Fatalf(format string, args ...interface{}) {
 	l.Criticalf(format, args...)
 	os.Exit(1)
 }
 
-// Panic is equivalent to Critical() followed by a call to panic().
+func (l *logger) Fatalln(args ...interface{}) {
+	l.Criticalln(args...)
+	os.Exit(1)
+}
+
 func (l *logger) Panic(args ...interface{}) {
 	l.Critical(args...)
 	panic(fmt.Sprint(args...))
 }
 
-// Panicf is equivalent to Criticalf() followed by a call to panic().
 func (l *logger) Panicf(format string, args ...interface{}) {
 	l.Criticalf(format, args...)
 	panic(fmt.Sprintf(format, args...))
 }
 
-// Critical sends a critical level log message to the handler.
-func (l *logger) Critical(args ...interface{}) { l.log(CRITICAL, nil, args...) }
+func (l *logger) Panicln(args ...interface{}) {
+	l.Criticalln(args...)
+	panic(fmt.Sprintln(args...))
+}
 
-// Criticalf sends a critical level log message to the handler. Arguments are handled in the manner of fmt.Printf.
-func (l *logger) Criticalf(format string, args ...interface{}) { l.log(CRITICAL, &format, args...) }
+func (l *logger) Critical(args ...interface{}) {
+	l.log(CRITICAL, fmt.Sprint(args...))
+}
 
-// Error sends a error level log message to the handler.
-func (l *logger) Error(args ...interface{}) { l.log(ERROR, nil, args...) }
+func (l *logger) Criticalf(format string, args ...interface{}) {
+	l.log(CRITICAL, fmt.Sprintf(format, args...))
+}
 
-// Errorf sends a error level log message to the handler. Arguments are handled in the manner of fmt.Printf.
-func (l *logger) Errorf(format string, args ...interface{}) { l.log(ERROR, &format, args...) }
+func (l *logger) Criticalln(args ...interface{}) {
+	l.log(CRITICAL, fmt.Sprintln(args...))
+}
 
-// Warning sends a warning level log message to the handler.
-func (l *logger) Warning(args ...interface{}) { l.log(WARNING, nil, args...) }
+func (l *logger) Error(args ...interface{}) {
+	l.log(ERROR, fmt.Sprint(args...))
+}
 
-// Warningf sends a warning level log message to the handler. Arguments are handled in the manner of fmt.Printf.
-func (l *logger) Warningf(format string, args ...interface{}) { l.log(WARNING, &format, args...) }
+func (l *logger) Errorf(format string, args ...interface{}) {
+	l.log(ERROR, fmt.Sprintf(format, args...))
+}
 
-// Notice sends a notice level log message to the handler.
-func (l *logger) Notice(args ...interface{}) { l.log(NOTICE, nil, args...) }
+func (l *logger) Errorln(args ...interface{}) {
+	l.log(ERROR, fmt.Sprintln(args...))
+}
 
-// Noticef sends a notice level log message to the handler. Arguments are handled in the manner of fmt.Printf.
-func (l *logger) Noticef(format string, args ...interface{}) { l.log(NOTICE, &format, args...) }
+func (l *logger) Warning(args ...interface{}) {
+	l.log(WARNING, fmt.Sprint(args...))
+}
 
-// Info sends a info level log message to the handler.
-func (l *logger) Info(args ...interface{}) { l.log(INFO, nil, args...) }
+func (l *logger) Warningf(format string, args ...interface{}) {
+	l.log(WARNING, fmt.Sprintf(format, args...))
+}
 
-// Infof sends a info level log message to the handler. Arguments are handled in the manner of fmt.Printf.
-func (l *logger) Infof(format string, args ...interface{}) { l.log(INFO, &format, args...) }
+func (l *logger) Warningln(args ...interface{}) {
+	l.log(WARNING, fmt.Sprintln(args...))
+}
 
-// Debug sends a debug level log message to the handler.
-func (l *logger) Debug(args ...interface{}) { l.log(DEBUG, nil, args...) }
+func (l *logger) Notice(args ...interface{}) {
+	l.log(NOTICE, fmt.Sprint(args...))
+}
 
-// Debugf sends a debug level log message to the handler. Arguments are handled in the manner of fmt.Printf.
-func (l *logger) Debugf(format string, args ...interface{}) { l.log(DEBUG, &format, args...) }
+func (l *logger) Noticef(format string, args ...interface{}) {
+	l.log(NOTICE, fmt.Sprintf(format, args...))
+}
+
+func (l *logger) Noticeln(args ...interface{}) {
+	l.log(NOTICE, fmt.Sprintln(args...))
+}
+
+func (l *logger) Info(args ...interface{}) {
+	l.log(INFO, fmt.Sprint(args...))
+}
+
+func (l *logger) Infof(format string, args ...interface{}) {
+	l.log(INFO, fmt.Sprintf(format, args...))
+}
+
+func (l *logger) Infoln(args ...interface{}) {
+	l.log(INFO, fmt.Sprintln(args...))
+}
+
+func (l *logger) Debug(args ...interface{}) {
+	l.log(DEBUG, fmt.Sprint(args...))
+}
+
+func (l *logger) Debugf(format string, args ...interface{}) {
+	l.log(DEBUG, fmt.Sprintf(format, args...))
+}
+
+func (l *logger) Debugln(args ...interface{}) {
+	l.log(DEBUG, fmt.Sprintln(args...))
+}

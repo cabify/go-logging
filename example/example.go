@@ -28,7 +28,9 @@ func main() {
 
 	// Custom logger with custom handler
 	l2 := log.NewLogger("test2")
-	l2.SetHandler(&MyHandler{})
+	h := NewMyHandler("!!!")
+	h.SetLevel(log.WARNING)
+	l2.SetHandler(h)
 
 	l2.Debug("Debug")
 	l2.Info("Info")
@@ -38,13 +40,25 @@ func main() {
 	l2.Critical("Critical")
 }
 
+// Adds prefix to log messages
 type MyHandler struct {
-	log.BaseHandler
+	*log.BaseHandler
+	prefix string
+}
+
+func NewMyHandler(prefix string) *MyHandler {
+	return &MyHandler{
+		BaseHandler: log.NewBaseHandler(),
+		prefix:      prefix,
+	}
 }
 
 func (h *MyHandler) Handle(rec *log.Record) {
-	fmt.Print(rec.Message)
+	message := h.BaseHandler.FilterAndFormat(rec)
+	if message == "" {
+		return
+	}
+	fmt.Println(h.prefix, message)
 }
 
-func (h *MyHandler) Close() {
-}
+func (h *MyHandler) Close() {}
