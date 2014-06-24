@@ -112,32 +112,32 @@ var procName = filepath.Base(os.Args[0])
 var pid = os.Getpid()
 
 func (l *logger) Fatal(args ...interface{}) {
-	l.Critical(args...)
+	l.log(CRITICAL, fmt.Sprint(args...))
 	os.Exit(1)
 }
 
 func (l *logger) Fatalf(format string, args ...interface{}) {
-	l.Criticalf(format, args...)
+	l.log(CRITICAL, fmt.Sprintf(format, args...))
 	os.Exit(1)
 }
 
 func (l *logger) Fatalln(args ...interface{}) {
-	l.Criticalln(args...)
+	l.log(CRITICAL, fmt.Sprintln(args...))
 	os.Exit(1)
 }
 
 func (l *logger) Panic(args ...interface{}) {
-	l.Critical(args...)
+	l.log(CRITICAL, fmt.Sprint(args...))
 	panic(fmt.Sprint(args...))
 }
 
 func (l *logger) Panicf(format string, args ...interface{}) {
-	l.Criticalf(format, args...)
+	l.log(CRITICAL, fmt.Sprintf(format, args...))
 	panic(fmt.Sprintf(format, args...))
 }
 
 func (l *logger) Panicln(args ...interface{}) {
-	l.Criticalln(args...)
+	l.log(CRITICAL, fmt.Sprintln(args...))
 	panic(fmt.Sprintln(args...))
 }
 
