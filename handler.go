@@ -20,6 +20,7 @@ const (
 	MAGENTA
 	CYAN
 	WHITE
+	NOCOLOR = -1
 )
 
 var LevelColors = map[Level]Color{
@@ -27,7 +28,7 @@ var LevelColors = map[Level]Color{
 	ERROR:    RED,
 	WARNING:  YELLOW,
 	NOTICE:   GREEN,
-	INFO:     WHITE,
+	INFO:     NOCOLOR,
 	DEBUG:    BLUE,
 }
 
@@ -122,7 +123,7 @@ func (b *WriterHandler) Handle(rec *Record) {
 	if !strings.HasSuffix(message, "\n") {
 		message += "\n"
 	}
-	if b.Colorize {
+	if b.Colorize && LevelColors[rec.Level] != NOCOLOR {
 		message = fmt.Sprintf("\033[%dm%s\033[0m", LevelColors[rec.Level], message)
 	}
 	fmt.Fprint(b.w, message)
