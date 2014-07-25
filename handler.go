@@ -105,6 +105,7 @@ func (h *BaseHandler) FilterAndFormat(rec *Record) string {
 type WriterHandler struct {
 	*BaseHandler
 	w        io.Writer
+	m        sync.Mutex
 	Colorize bool
 }
 
@@ -126,7 +127,9 @@ func (b *WriterHandler) Handle(rec *Record) {
 	if b.Colorize && LevelColors[rec.Level] != NOCOLOR {
 		message = fmt.Sprintf("\033[%dm%s\033[0m", LevelColors[rec.Level], message)
 	}
+	b.m.Lock()
 	fmt.Fprint(b.w, message)
+	b.m.Unlock()
 }
 
 func (b *WriterHandler) Close() {}
