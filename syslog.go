@@ -47,6 +47,6 @@ func (b *SyslogHandler) Handle(rec *Record) {
 	fn(message)
 }
 
-func (b *SyslogHandler) Close() {
-	b.w.Close()
+func (b *SyslogHandler) Close() error {
+	return b.w.Close()
 }

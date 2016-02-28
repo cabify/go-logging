@@ -7,5 +7,5 @@ type Handler interface {
 	// Handle single log record.
 	Handle(*Record)
 	// Close the handler.
-	Close()
+	Close() error
 }

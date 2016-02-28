@@ -61,4 +61,4 @@ func (h *MyHandler) Handle(rec *log.Record) {
 	fmt.Println(h.prefix, message)
 }
 
-func (h *MyHandler) Close() {}
+func (h *MyHandler) Close() error { return nil }

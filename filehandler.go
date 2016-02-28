@@ -42,8 +42,8 @@ func (h *FileHandler) Handle(rec *Record) {
 	h.m.Unlock()
 }
 
-func (h *FileHandler) Close() {
-	h.Close()
+func (h *FileHandler) Close() error {
+	return h.Close()
 }
 
 type Color int

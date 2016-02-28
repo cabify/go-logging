@@ -34,4 +34,9 @@ func (b *WriterHandler) Handle(rec *Record) {
 	b.m.Unlock()
 }
 
-func (b *WriterHandler) Close() {}
+func (b *WriterHandler) Close() error {
+	if c, ok := b.w.(io.Closer); ok {
+		return c.Close()
+	}
+	return nil
+}
