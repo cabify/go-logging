@@ -18,11 +18,9 @@ const (
 var (
 	DefaultLogger    Logger    = NewLogger(procName)
 	DefaultLevel     Level     = INFO
-	DefaultHandler   Handler   = stderrHandler
+	DefaultHandler   Handler   = NewFileHandler(os.Stderr)
 	DefaultFormatter Formatter = defaultFormatter{}
 )
-
-var stderrHandler = NewFileHandler(os.Stderr)
 
 ///////////////////
 //               //
