@@ -22,7 +22,7 @@ var (
 	DefaultFormatter Formatter = defaultFormatter{}
 )
 
-var stderrHandler = NewWriterHandler(os.Stderr)
+var stderrHandler = NewFileHandler(os.Stderr)
 
 ///////////////////
 //               //
