@@ -1,5 +1,5 @@
-logging
-=======
+log
+===
 
 Simple logging package in Go.
 
@@ -18,8 +18,7 @@ Features
 --------
 
 * Log levels (DEBUG, INFO, NOTICE, WARNING, ERROR, CRITICAL)
-* Different colored output for different levels (can be disabled)
-* No global state in package
+* Different colored output for different log levels
 * Customizable logging handlers
 * Customizable formatters
 * Log to multiple backends concurrently
