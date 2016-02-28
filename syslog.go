@@ -4,12 +4,6 @@ package log
 
 import "log/syslog"
 
-///////////////////
-//               //
-// SyslogHandler //
-//               //
-///////////////////
-
 // SyslogHandler sends the logging output to syslog.
 type SyslogHandler struct {
 	*BaseHandler
