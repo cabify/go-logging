@@ -23,6 +23,19 @@ func NewSyslogHandler(tag string) (*SyslogHandler, error) {
 	}, nil
 }
 
+func NewSyslogHandlerDial(network, raddr, tag string) (*SyslogHandler, error) {
+	// Priority in New constructor is not important here because we
+	// do not use w.Write() directly.
+	w, err := syslog.Dial(network, raddr, syslog.LOG_INFO|syslog.LOG_USER, tag)
+	if err != nil {
+		return nil, err
+	}
+	return &SyslogHandler{
+		BaseHandler: NewBaseHandler(),
+		w:           w,
+	}, nil
+}
+
 func (b *SyslogHandler) Handle(rec *Record) {
 	message := b.BaseHandler.FilterAndFormat(rec)
 	if message == "" {
