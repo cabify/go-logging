@@ -1,18 +1,17 @@
-log
-===
+logging
+=======
 
-Simple logging package in Go.
+Simple logging package in Go used at Cabify.
 
-[![GoDoc](https://godoc.org/github.com/cenkalti/log?status.png)](https://godoc.org/github.com/cenkalti/log)
+[![GoDoc](https://godoc.org/github.com/cabify/go-logging?status.png)](https://godoc.org/github.com/cabify/go-logging)
 
 
 Install
 -------
 
 ```sh
-$ go get github.com/cenkalti/log
+$ go get github.com/cabify/go-logging
 ```
-
 
 Features
 --------
@@ -27,4 +26,4 @@ Features
 Example Usage
 -------------
 
-See [https://github.com/cenkalti/log/blob/master/example/example.go](https://github.com/cenkalti/log/blob/master/example/example.go)
+See [https://github.com/cabify/go-logging/blob/master/example/example.go](https://github.com/cabify/go-logging/blob/master/example/example.go)

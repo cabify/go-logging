@@ -1,5 +1,5 @@
 // Package logging is an alternative to log package in standard library.
-package log
+package logging
 
 import "os"
 
