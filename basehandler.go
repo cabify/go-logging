@@ -1,4 +1,4 @@
-package logging
+package log
 
 type BaseHandler struct {
 	Level     Level

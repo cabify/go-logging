@@ -1,4 +1,4 @@
-package logging
+package log
 
 // Handler handles the output.
 type Handler interface {

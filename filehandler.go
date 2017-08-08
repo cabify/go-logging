@@ -1,4 +1,4 @@
-package logging
+package log
 
 import (
 	"fmt"
@@ -50,7 +50,7 @@ type Color int
 
 // Colors for different log levels.
 const (
-	BLACK Color = (iota + 30)
+	BLACK Color = iota + 30
 	RED
 	GREEN
 	YELLOW
