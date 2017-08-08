@@ -1,4 +1,4 @@
-package logging
+package log
 
 import (
 	"fmt"
@@ -81,7 +81,28 @@ func (l *logger) SetLevel(level Level) { l.Level = level }
 func (l *logger) SetHandler(b Handler) { l.Handler = b }
 func (l *logger) SetCallDepth(n int)   { l.calldepth = n }
 
-func (l *logger) log(level Level, message string) {
+func (l *logger) log(level Level, args ...interface{}) {
+	if level > l.Level {
+		return
+	}
+	l.logMsg(level, fmt.Sprint(args...))
+}
+
+func (l *logger) logf(level Level, format string, args ...interface{}) {
+	if level > l.Level {
+		return
+	}
+	l.logMsg(level, fmt.Sprintf(format, args...))
+}
+
+func (l *logger) logln(level Level, args ...interface{}) {
+	if level > l.Level {
+		return
+	}
+	l.logMsg(level, fmt.Sprintln(args...))
+}
+
+func (l *logger) logMsg(level Level, message string) {
 	if level > l.Level {
 		return
 	}
@@ -112,103 +133,103 @@ var procName = filepath.Base(os.Args[0])
 var pid = os.Getpid()
 
 func (l *logger) Fatal(args ...interface{}) {
-	l.log(CRITICAL, fmt.Sprint(args...))
+	l.log(CRITICAL, args...)
 	os.Exit(1)
 }
 
 func (l *logger) Fatalf(format string, args ...interface{}) {
-	l.log(CRITICAL, fmt.Sprintf(format, args...))
+	l.logf(CRITICAL, format, args...)
 	os.Exit(1)
 }
 
 func (l *logger) Fatalln(args ...interface{}) {
-	l.log(CRITICAL, fmt.Sprintln(args...))
+	l.logln(CRITICAL, args...)
 	os.Exit(1)
 }
 
 func (l *logger) Panic(args ...interface{}) {
-	l.log(CRITICAL, fmt.Sprint(args...))
+	l.log(CRITICAL, args...)
 	panic(fmt.Sprint(args...))
 }
 
 func (l *logger) Panicf(format string, args ...interface{}) {
-	l.log(CRITICAL, fmt.Sprintf(format, args...))
+	l.logf(CRITICAL, format, args...)
 	panic(fmt.Sprintf(format, args...))
 }
 
 func (l *logger) Panicln(args ...interface{}) {
-	l.log(CRITICAL, fmt.Sprintln(args...))
+	l.logln(CRITICAL, args...)
 	panic(fmt.Sprintln(args...))
 }
 
 func (l *logger) Critical(args ...interface{}) {
-	l.log(CRITICAL, fmt.Sprint(args...))
+	l.log(CRITICAL, args...)
 }
 
 func (l *logger) Criticalf(format string, args ...interface{}) {
-	l.log(CRITICAL, fmt.Sprintf(format, args...))
+	l.logf(CRITICAL, format, args...)
 }
 
 func (l *logger) Criticalln(args ...interface{}) {
-	l.log(CRITICAL, fmt.Sprintln(args...))
+	l.logln(CRITICAL, args...)
 }
 
 func (l *logger) Error(args ...interface{}) {
-	l.log(ERROR, fmt.Sprint(args...))
+	l.log(ERROR, args...)
 }
 
 func (l *logger) Errorf(format string, args ...interface{}) {
-	l.log(ERROR, fmt.Sprintf(format, args...))
+	l.logf(ERROR, format, args...)
 }
 
 func (l *logger) Errorln(args ...interface{}) {
-	l.log(ERROR, fmt.Sprintln(args...))
+	l.logln(ERROR, args...)
 }
 
 func (l *logger) Warning(args ...interface{}) {
-	l.log(WARNING, fmt.Sprint(args...))
+	l.log(WARNING, args...)
 }
 
 func (l *logger) Warningf(format string, args ...interface{}) {
-	l.log(WARNING, fmt.Sprintf(format, args...))
+	l.logf(WARNING, format, args...)
 }
 
 func (l *logger) Warningln(args ...interface{}) {
-	l.log(WARNING, fmt.Sprintln(args...))
+	l.logln(WARNING, args...)
 }
 
 func (l *logger) Notice(args ...interface{}) {
-	l.log(NOTICE, fmt.Sprint(args...))
+	l.log(NOTICE, args...)
 }
 
 func (l *logger) Noticef(format string, args ...interface{}) {
-	l.log(NOTICE, fmt.Sprintf(format, args...))
+	l.logf(NOTICE, format, args...)
 }
 
 func (l *logger) Noticeln(args ...interface{}) {
-	l.log(NOTICE, fmt.Sprintln(args...))
+	l.logln(NOTICE, args...)
 }
 
 func (l *logger) Info(args ...interface{}) {
-	l.log(INFO, fmt.Sprint(args...))
+	l.log(INFO, args...)
 }
 
 func (l *logger) Infof(format string, args ...interface{}) {
-	l.log(INFO, fmt.Sprintf(format, args...))
+	l.logf(INFO, format, args...)
 }
 
 func (l *logger) Infoln(args ...interface{}) {
-	l.log(INFO, fmt.Sprintln(args...))
+	l.logln(INFO, args...)
 }
 
 func (l *logger) Debug(args ...interface{}) {
-	l.log(DEBUG, fmt.Sprint(args...))
+	l.log(DEBUG, args...)
 }
 
 func (l *logger) Debugf(format string, args ...interface{}) {
-	l.log(DEBUG, fmt.Sprintf(format, args...))
+	l.logf(DEBUG, format, args...)
 }
 
 func (l *logger) Debugln(args ...interface{}) {
-	l.log(DEBUG, fmt.Sprintln(args...))
+	l.logln(DEBUG, args...)
 }
