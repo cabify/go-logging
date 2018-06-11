@@ -14,7 +14,6 @@ func TestDefaultFormatterHasRightDateFormat(t *testing.T) {
 		Time: ts,
 		Message: "Hello World!",
 	}
-	formatter := DefaultFormatter
-	line := formatter.Format(&rec)
+	line := DefaultFormatter.Format(&rec)
 	assert.Equal(t, "2018-06-11 12:35:18.123 [] INFO     Hello World!", line)
 }
