@@ -23,7 +23,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Security
 - Nothing
 
-## [1.3.0] - 2019-02-27
+## [1.2.0] - 2019-02-27
 ### Added
 - `ConfigureDefaultLogger` boilerplate for logger configuration
 - `measuredLoggingHandler` to wrap loggers with metrics
