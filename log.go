@@ -58,3 +58,29 @@ func Infoln(args ...interface{})                   { DefaultLogger.Infoln(args..
 func Debug(args ...interface{})                    { DefaultLogger.Debug(args...) }
 func Debugf(format string, args ...interface{})    { DefaultLogger.Debugf(format, args...) }
 func Debugln(args ...interface{})                  { DefaultLogger.Debugln(args...) }
+
+const (
+	logLevelCritical = "critical"
+	logLevelError    = "error"
+	logLevelWarning  = "warning"
+	logLevelNotice   = "notice"
+	logLevelInfo     = "info"
+	logLevelDebug    = "debug"
+)
+
+var logLevelMap = map[string]Level{
+	logLevelCritical: CRITICAL,
+	logLevelError:    ERROR,
+	logLevelWarning:  WARNING,
+	logLevelNotice:   NOTICE,
+	logLevelInfo:     INFO,
+	logLevelDebug:    DEBUG,
+}
+
+var logLevelNameMap = make(map[Level]string)
+
+func init() {
+	for name, value := range logLevelMap {
+		logLevelNameMap[value] = name
+	}
+}
