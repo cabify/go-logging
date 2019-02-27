@@ -8,8 +8,7 @@ import (
 )
 
 func TestDefaultFormatterHasRightDateFormat(t *testing.T) {
-	// Mon, 11 Jun 2018 12:35:18.123 UTC
-	ts := time.Unix(1528713318, 123000000)
+	ts := time.Date(2018, 6, 11, 12, 35, 18, 123000000, time.Local)
 	rec := Record{
 		Level:   INFO,
 		Time:    ts,
