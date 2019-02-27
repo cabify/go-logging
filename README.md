@@ -2,6 +2,7 @@ logging
 =======
 
 Simple logging package in Go used at Cabify.
+Originally forked from [cenkalti/log](https://github.com/cenkalti/log)
 
 [![GoDoc](https://godoc.org/github.com/cabify/go-logging?status.png)](https://godoc.org/github.com/cabify/go-logging)
 
