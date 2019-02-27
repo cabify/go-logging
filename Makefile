@@ -41,4 +41,5 @@ fix-fmt: ## Run goimports on all packages, fix files that don't match code-style
 
 install-tools: ## Install the required tooling
 	go get -u -v \
-		golang.org/x/tools/cmd/goimports
+		golang.org/x/tools/cmd/goimports \
+		golang.org/x/lint/golint
