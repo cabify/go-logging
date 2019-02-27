@@ -7,6 +7,7 @@ env:
   - GO111MODULE=on
 
 install:
+  - make install-tools
   - make deps
 
 script:

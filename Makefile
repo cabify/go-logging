@@ -38,3 +38,7 @@ shellcheck:	## Lint shell scripts for potential errors
 
 fix-fmt: ## Run goimports on all packages, fix files that don't match code-style
 	@scripts/fix-fmt.sh
+
+install-tools: ## Install the required tooling
+	go get -u -v \
+		golang.org/x/tools/cmd/goimports
