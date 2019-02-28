@@ -1,0 +1,14 @@
+language: go
+
+go:
+  - "1.11.x"
+
+env:
+  - GO111MODULE=on
+
+install:
+  - make install-tools
+  - make deps
+
+script:
+  - make validate

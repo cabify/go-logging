@@ -1,6 +1,6 @@
 /*
 Package logtest is intended to be used by tests for checking that baggage values have been correctly set
- */
+*/
 package logtest
 
 import (

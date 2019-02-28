@@ -3,7 +3,7 @@ package main
 import (
 	"fmt"
 
-	"github.com/cabify/go-logging"
+	log "github.com/cabify/go-logging"
 )
 
 func main() {
