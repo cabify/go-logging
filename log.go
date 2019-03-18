@@ -1,9 +1,24 @@
 // Package log is an alternative to log package in standard library.
 package log
 
-import "os"
+import (
+	"fmt"
+	"os"
+)
 
 type Level int
+
+// Decode fills this level from the given input string.
+// This makes `Level` implement the `Decoder` interface of `envconfig` library,
+// so it can be used in config types seamlessly.
+func (l *Level) Decode(val string) error {
+	if logLevel, ok := logLevelMap[val]; ok {
+		*l = logLevel
+		return nil
+	} else {
+		return fmt.Errorf("Unknown log level configured: %s", val)
+	}
+}
 
 // Logging levels.
 const (
