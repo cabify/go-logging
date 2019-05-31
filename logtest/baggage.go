@@ -6,12 +6,12 @@ package logtest
 import (
 	"context"
 
-	"github.com/cabify/go-logging/internal"
+	log "github.com/cabify/go-logging"
 )
 
 // HasBaggageValue returns whether the context contains a baggage value.
 func HasBaggageValue(ctx context.Context, key, value string) bool {
-	baggage, ok := ctx.Value(internal.BaggageContextKey).(internal.Baggage)
+	baggage, ok := ctx.Value(log.BaggageContextKey).(map[string]interface{})
 	if !ok {
 		return false
 	}

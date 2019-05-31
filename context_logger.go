@@ -2,13 +2,25 @@ package log
 
 import (
 	"context"
-
-	"github.com/cabify/go-logging/internal"
+	"fmt"
+	"sort"
+	"strings"
 )
 
 type baggageLogger struct {
 	Logger
 	ctx context.Context
+}
+
+func baggageString(b map[string]interface{}) string {
+	var kvPairs []string
+	for key, value := range b {
+		kvPairs = append(kvPairs, fmt.Sprintf("%s:%v", key, value))
+	}
+
+	sort.Strings(kvPairs)
+
+	return strings.Join(kvPairs, ": ")
 }
 
 func newBaggageLogger(ctx context.Context, base Logger) baggageLogger {
@@ -19,12 +31,12 @@ func newBaggageLogger(ctx context.Context, base Logger) baggageLogger {
 }
 
 func (l baggageLogger) getContextString() string {
-	baggage, ok := l.ctx.Value(internal.BaggageContextKey).(internal.Baggage)
+	baggage, ok := l.ctx.Value(BaggageContextKey).(map[string]interface{})
 	if !ok {
 		return ""
 	}
 
-	return baggage.String() + ": "
+	return baggageString(baggage) + ": "
 }
 
 func (l baggageLogger) Fatal(args ...interface{}) {
