@@ -1,3 +1,9 @@
+Deprecated
+=======
+
+The development of this library is discontinued and we encourage you to avoid
+using it in new projects. There are better alternatives out there.
+
 logging
 =======
 
