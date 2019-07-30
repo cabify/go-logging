@@ -5,7 +5,7 @@ import (
 )
 
 // DefaultFactory is the factory used to create new loggers
-var DefaultFactory Factory = NewFactory()
+var DefaultFactory LoggerFactory = NewFactory()
 
 // LoggerFactory creates Logger instances
 type LoggerFactory interface {
