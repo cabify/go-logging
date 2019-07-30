@@ -23,6 +23,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Security
 - Nothing
 
+## [1.5.1] - 2019-07-30
+### Changed
+- Make `DefaultFactory` of type `LoggerFactory` so it accepts other implementations
+
 ## [1.5.0] - 2019-07-30
 ### Added
 - `LoggerFactory` interface abstracting `Factory` struct
