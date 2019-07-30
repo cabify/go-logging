@@ -4,8 +4,10 @@ import (
 	"context"
 )
 
+// DefaultFactory is the factory used to create new loggers
 var DefaultFactory Factory = NewFactory()
 
+// LoggerFactory creates Logger instances
 type LoggerFactory interface {
 	For(ctx context.Context) Logger
 }
