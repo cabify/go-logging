@@ -23,6 +23,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Security
 - Nothing
 
+## [1.5.0] - 2019-07-30
+### Added
+- `LoggerFactory` interface abstracting `Factory` struct
+- `DefaultFactory` global var that allows to replace factory used to generate loggers
+
 ## [1.4.0] - 2019-05-30
 ### Changed
 - Baggage key is now a public string `"logctx-data-map-string-interface"` that can be set and read by anyone from any package.
